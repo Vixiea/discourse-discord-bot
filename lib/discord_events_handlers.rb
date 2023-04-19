@@ -10,7 +10,7 @@ module ::DiscordBot::DiscordEventsHandlers
 
       system_user = User.find_by(id: -1)
 
-      associated_user = UserCustomField.find_by(value: event.message.auther.name)
+      associated_user = UserCustomField.find_by(value: event.message.author.name)
 
       unless associated_user.nil?
         message_user = User.find_by(id: associated_user.user_id)
