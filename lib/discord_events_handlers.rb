@@ -20,6 +20,7 @@ module ::DiscordBot::DiscordEventsHandlers
         raw = event.message.username.to_s + ": " + event.message.to_s
       end
 
+      STDERR.puts raw
       discordmessage = event.message.to_s
       if !discordmessage.blank?
         if SiteSetting.discord_bot_auto_channel_sync
