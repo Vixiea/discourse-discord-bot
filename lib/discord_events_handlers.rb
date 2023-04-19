@@ -26,7 +26,7 @@ module ::DiscordBot::DiscordEventsHandlers
       STDERR.puts event.message
       STDERR.puts 'Raw: ' + raw
       discordmessage = event.message.content
-      STDERR.puts 'Sent message: ' + event.message.content.to_s
+      STDERR.puts 'Sent message: ' + event.message.content
       if !discordmessage.blank?
         if SiteSetting.discord_bot_auto_channel_sync
           matching_channel = Chat::Channel.find_by(slug: event.message.channel.name)
