@@ -3,7 +3,7 @@
 class ::DiscordBot::Bot
 
   @@DiscordBot = nil
-  @@DiscordPost = 0
+  $DiscordPost = 0
 
   def self.init
     @@DiscordBot = Discordrb::Commands::CommandBot.new token: SiteSetting.discord_bot_token, prefix: '!'
