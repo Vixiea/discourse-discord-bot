@@ -15,17 +15,17 @@ module ::DiscordBot::DiscordEventsHandlers
       STDERR.puts associated_user.value
       unless associated_user.nil? || associated_user.blank?
         message_user = User.find_by(id: associated_user.user_id)
-        raw = event.message.content.to_s
+        raw = event.message.content
         STDERR.puts 'Found User'
       else
         message_user = system_user
-        raw = event.message.author.username.to_s + ": " + event.message.to_s
+        raw = event.message.author.username + ": " + event.message.content
         STDERR.puts 'No User'
       end
 
-      STDERR.puts event
+      STDERR.puts event.message
       STDERR.puts 'Raw: ' + raw
-      discordmessage = event.message.content.to_s
+      discordmessage = event.message.content
       STDERR.puts 'Sent message: ' + event.message.content.to_s
       if !discordmessage.blank?
         if SiteSetting.discord_bot_auto_channel_sync
