@@ -8,14 +8,14 @@ module ::DiscordBot::DiscourseEventsHandlers
           #matching_channel = Chat::Channel.find_by(id: message.chat_channel_id)
           matching_channel = chat_message.chat_channel
           STDERR.puts matching_channel
-          if SiteSetting.discord_bot_auto_channel_sync && $DiscordPost = 0 then
+          if SiteSetting.discord_bot_auto_channel_sync && $DiscordPost == 0 then
             channel_id = matching_channel.description.to_s
             #channel_id = matching_channel.slug
             #text = User.find_by(id: message.user_id).name + ": " + message.message.to_s
             text = User.find_by(id: chat_message.user_id).name + ": " + chat_message.message.to_s
             ::DiscordBot::Bot.discord_bot.send_message(channel_id, text)
         else
-          if chat_listening_categories.include?(matching_channel.to_s) && $DiscordPost = 0 then
+          if chat_listening_categories.include?(matching_channel.to_s) && $DiscordPost == 0 then
             channel_id = matching_channel.description.to_s
             #channel_id = matching_channel.slug
             #text = User.find_by(id: message.user_id).name + ": " + message.message.to_s 
