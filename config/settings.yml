@@ -21,6 +21,9 @@ plugins:
     client: false
     default: ''
     type: category_list
+  discord_bot_chat_listening_categories:
+    client: false
+    default: ''
   discord_bot_topic_announcement_categories:
     client: false
     default: ''
