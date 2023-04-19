@@ -23,10 +23,14 @@ module ::DiscordBot::DiscordEventsHandlers
         STDERR.puts 'No User'
       end
 
-      STDERR.puts event.message
+      STDERR.puts 'Event content: ' + event.content
+      STDERR.puts 'Event message: ' + event.message
+      STDERR.puts 'Event message content: ' + event.message.content
+      STDERR.puts 'Event message channel name: ' + event.message.channel.name
+      STDERR.puts 'Event message message content: ' + event.message.message.content
       STDERR.puts 'Raw: ' + raw
       discordmessage = event.message.content
-      STDERR.puts 'Sent message: ' + event.message.content
+      
       if !discordmessage.blank?
         if SiteSetting.discord_bot_auto_channel_sync
           matching_channel = Chat::Channel.find_by(slug: event.message.channel.name)
