@@ -5,18 +5,18 @@ module ::DiscordBot::DiscourseEventsHandlers
       if Chat::Channel.find_by(id: message.chat_channel_id).chatable_type != 'DirectMessage' && !::DiscordBot::Bot.discord_bot.nil? then
           if @@DiscordPost = 1 then
             @@DiscordPost = 0
-            return
+            break
           end
           chat_listening_categories = SiteSetting.discord_bot_chat_listening_categories.split('|')
           matching_channel = Chat::Channel.find_by(id: message.chat_channel_id)
           if SiteSetting.discord_bot_auto_channel_sync then
             channel_id = matching_channel.description.to_s
-            text = User.find_by(id: message.user_id) + ": " + message.message.to_s
+            text = User.find_by(id: message.user_id).name + ": " + message.message.to_s
             ::DiscordBot::Bot.discord_bot.send_message(channel_id, text)
         else
           if chat_listening_categories.include?(matching_channel.to_s) then
             channel_id = matching_channel.description.to_s
-            text = User.find_by(id: message.user_id) + ": " + message.message.to_s 
+            text = User.find_by(id: message.user_id).name + ": " + message.message.to_s 
             ::DiscordBot::Bot.discord_bot.send_message(channel_id, message)
           end
         end
