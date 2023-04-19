@@ -23,7 +23,7 @@ module ::DiscordBot::DiscordEventsHandlers
       discordmessage = event.message.to_s
       if !discordmessage.blank?
         if SiteSetting.discord_bot_auto_channel_sync
-          matching_channel = Chat::Channel.find_by(name: event.message.channel.name)
+          matching_channel = Chat::Channel.find_by(slug: event.message.channel.name)
           unless matching_channel.nil?
             Chat::MessageCreator.create(chat_channel: matching_channel, user: message_user, content: raw).chat_message
             $DiscordPost = 1
@@ -32,10 +32,10 @@ module ::DiscordBot::DiscordEventsHandlers
         end
         if !SiteSetting.discord_bot_chat_listening_categories.blank?
           chat_listening_categories = SiteSetting.discord_bot_chat_listening_categories.split('|')
-          matching_channel = Chat::Channel.find_by(name: event.message.channel.name)
+          matching_channel = Chat::Channel.find_by(slug: event.message.channel.name)
           if chat_listening_categories.include?(matching_channel.to_s) then
             Chat::MessageCreator.create(chat_channel: matching_channel, user: message_user, content: raw).chat_message
-            @@DiscordPost = 1
+            $DiscordPost = 1
           end
         end
       end
