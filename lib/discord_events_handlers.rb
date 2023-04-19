@@ -6,17 +6,17 @@ module ::DiscordBot::DiscordEventsHandlers
     message do |event|
 
       return if !SiteSetting.discord_bot_auto_channel_sync && SiteSetting.discord_bot_discourse_announcement_topic_id.blank? && (event.message.channel.id != SiteSetting.discord_bot_announcement_channel_id)
-      # return if event.message.author.bot
+      return if event.message.from_bot?
 
       system_user = User.find_by(id: -1)
 
-      associated_user = UserCustomField.find_by(value: event.message.author.name)
+      associated_user = UserCustomField.find_by(value: event.message.author.username + "#" + event.message.author.discriminator)
 
       unless associated_user.nil?
         message_user = User.find_by(id: associated_user.user_id)
       else
         message_user = system_user
-        raw = event.message.nick.to_s + ": "
+        raw = event.message.username.to_s + ": "
       end
 
       discordmessage = event.message.to_s
@@ -26,7 +26,7 @@ module ::DiscordBot::DiscordEventsHandlers
           matching_channel = Chat::Channel.find_by(name: event.message.channel.name)
           unless matching_channel.nil?
             Chat::MessageCreator.create(chat_channel: matching_channel, user: message_user, content: raw).chat_message
-            @@DiscordPost = 1
+            $DiscordPost = 1
             return
           end
         end
