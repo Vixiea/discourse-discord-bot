@@ -11,13 +11,13 @@ module ::DiscordBot::DiscordEventsHandlers
       system_user = User.find_by(id: -1)
       raw = ""
       associated_user = UserCustomField.find_by(value: event.message.author.username + "#" + event.message.author.discriminator)
-
+      STDERR.puts associated_user
       unless associated_user.nil?
         message_user = User.find_by(id: associated_user.user_id)
         raw = event.message.to_s
       else
         message_user = system_user
-        raw = event.message.username.to_s + ": " + event.message.to_s
+        raw = event.message.author.username.to_s + ": " + event.message.to_s
       end
 
       STDERR.puts raw
