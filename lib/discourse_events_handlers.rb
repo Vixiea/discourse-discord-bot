@@ -12,7 +12,7 @@ module ::DiscordBot::DiscourseEventsHandlers
             text = User.find_by(id: message.user_id).name + ": " + message.message.to_s
             ::DiscordBot::Bot.discord_bot.send_message(channel_id, text)
         else
-          if chat_listening_categories.include?(matching_channel.to_s) && DiscordPost = 0 then
+          if chat_listening_categories.include?(matching_channel.to_s) && $DiscordPost = 0 then
             channel_id = matching_channel.description.to_s
             #channel_id = matching_channel.slug
             text = User.find_by(id: message.user_id).name + ": " + message.message.to_s 
