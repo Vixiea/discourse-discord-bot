@@ -23,13 +23,14 @@ module ::DiscordBot::DiscordEventsHandlers
         STDERR.puts 'No User'
       end
 
-      STDERR.puts raw
+      STDERR.puts event
+      STDERR.puts 'Raw: ' + raw
       discordmessage = event.message.content.to_s
-      STDERR.puts 'Sent message: ' + event.message.to_s
+      STDERR.puts 'Sent message: ' + event.message.content.to_s
       if !discordmessage.blank?
         if SiteSetting.discord_bot_auto_channel_sync
           matching_channel = Chat::Channel.find_by(slug: event.message.channel.name)
-          STDERR.puts matching_channel
+          STDERR.puts 'First case channel: ' + matching_channel
           unless matching_channel.nil?
             Chat::MessageCreator.create(chat_channel: matching_channel, user: message_user, content: raw).chat_message
             $DiscordPost = 1
@@ -39,7 +40,7 @@ module ::DiscordBot::DiscordEventsHandlers
         if !SiteSetting.discord_bot_chat_listening_categories.blank?
           chat_listening_categories = SiteSetting.discord_bot_chat_listening_categories.split('|')
           matching_channel = Chat::Channel.find_by(slug: event.message.channel.name)
-          STDERR.puts matching_channel
+          STDERR.puts 'Second case channel: ' + matching_channel
           if chat_listening_categories.include?(matching_channel.to_s) then
             Chat::MessageCreator.create(chat_channel: matching_channel, user: message_user, content: raw).chat_message
             $DiscordPost = 1
