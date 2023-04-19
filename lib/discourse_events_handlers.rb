@@ -1,19 +1,23 @@
 # frozen_string_literal: true
 module ::DiscordBot::DiscourseEventsHandlers
   def self.hook_events
-    DiscourseEvent.on(:post_created) do |post|
-      if post.id > 0 && post.topic.archetype != 'private_message' && !::DiscordBot::Bot.discord_bot.nil? then
-        post_listening_categories = SiteSetting.discord_bot_post_announcement_categories.split('|')
-        topic_listening_categories = SiteSetting.discord_bot_topic_announcement_categories.split('|')
-        posted_category = post.topic.category.id
-        posted_category_name = Category.find_by(id: posted_category).name
-        if post_listening_categories.include?(posted_category.to_s) then
-          message = "There's a new Post in the '#{posted_category_name}' Category on Discourse: #{Discourse.base_url + post.url}"
-          ::DiscordBot::Bot.discord_bot.send_message(SiteSetting.discord_bot_announcement_channel_id, message)
+    DiscourseEvent.on(:chat_message_created) do |message|
+      if Chat::Channel.find_by(id: message.chat_channel_id).chatable_type != 'DirectMessage' && !::DiscordBot::Bot.discord_bot.nil? then
+          if @@DiscordPost = 1 then
+            @@DiscordPost = 0
+            return
+          end
+          chat_listening_categories = SiteSetting.discord_bot_chat_listening_categories.split('|')
+          matching_channel = Chat::Channel.find_by(id: message.chat_channel_id)
+          if SiteSetting.discord_bot_auto_channel_sync then
+            channel_id = matching_channel.description.to_s
+            text = User.find_by(id: message.user_id) + ": " + message.message.to_s
+            ::DiscordBot::Bot.discord_bot.send_message(channel_id, text)
         else
-          if topic_listening_categories.include?(posted_category.to_s) && post.post_number = 1 then
-            message = "There's a new Topic in the '#{posted_category_name}' Category on Discourse: #{Discourse.base_url + post.url}"
-            ::DiscordBot::Bot.discord_bot.send_message(SiteSetting.discord_bot_announcement_channel_id, message)
+          if chat_listening_categories.include?(matching_channel.to_s) then
+            channel_id = matching_channel.description.to_s
+            text = User.find_by(id: message.user_id) + ": " + message.message.to_s 
+            ::DiscordBot::Bot.discord_bot.send_message(channel_id, message)
           end
         end
       end
