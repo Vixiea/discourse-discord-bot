@@ -31,8 +31,8 @@ module ::DiscordBot::DiscordEventsHandlers
           matching_channel = Chat::Channel.find_by(slug: event.message.channel.name.to_s)
           STDERR.puts 'First case channel: ' + matching_channel.slug
           unless matching_channel.nil?
-            Chat::MessageCreator.create(chat_channel: matching_channel, user: message_user, content: raw).chat_message
             $DiscordPost = 1
+            Chat::MessageCreator.create(chat_channel: matching_channel, user: message_user, content: raw).chat_message
           end
         end
         if !SiteSetting.discord_bot_chat_listening_categories.blank?
@@ -40,8 +40,8 @@ module ::DiscordBot::DiscordEventsHandlers
           matching_channel = Chat::Channel.find_by(slug: event.message.channel.name.to_s)
           STDERR.puts 'Second case channel: ' + matching_channel.slug
           if chat_listening_categories.include?(matching_channel.to_s) then
-            Chat::MessageCreator.create(chat_channel: matching_channel, user: message_user, content: raw).chat_message
             $DiscordPost = 1
+            Chat::MessageCreator.create(chat_channel: matching_channel, user: message_user, content: raw).chat_message
           end
         end
       end
