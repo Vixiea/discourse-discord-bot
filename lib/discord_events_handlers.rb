@@ -6,7 +6,7 @@ module ::DiscordBot::DiscordEventsHandlers
     message do |event|
 
       return if !SiteSetting.discord_bot_auto_channel_sync && SiteSetting.discord_bot_discourse_announcement_topic_id.blank? && (event.message.channel.id != SiteSetting.discord_bot_announcement_channel_id)
-      return if event.message.author.bot = true
+      return if event.message.author.bot
 
       system_user = User.find_by(id: -1)
 
