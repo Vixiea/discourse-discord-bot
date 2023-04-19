@@ -11,8 +11,8 @@ module ::DiscordBot::DiscordEventsHandlers
       system_user = User.find_by(id: -1)
       raw = ""
       
-      associated_user = UserCustomField.find_by(value: event.message.author.username + "#" + event.message.author.discriminator)
-      STDERR.puts associated_user.value
+      associated_user = UserAssociatedAccount.find_by(provider_uid: event.message.author.id)
+
       unless associated_user.nil? || associated_user.blank?
         message_user = User.find_by(id: associated_user.user_id)
         raw = event.message.content
@@ -33,7 +33,6 @@ module ::DiscordBot::DiscordEventsHandlers
           unless matching_channel.nil?
             Chat::MessageCreator.create(chat_channel: matching_channel, user: message_user, content: raw).chat_message
             $DiscordPost = 1
-            return
           end
         end
         if !SiteSetting.discord_bot_chat_listening_categories.blank?
