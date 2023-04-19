@@ -23,11 +23,11 @@ module ::DiscordBot::DiscordEventsHandlers
         STDERR.puts 'No User'
       end
 
-      STDERR.puts 'Event content: ' + event.content
-      STDERR.puts 'Event message: ' + event.message
-      STDERR.puts 'Event message content: ' + event.message.content
-      STDERR.puts 'Event message channel name: ' + event.message.channel.name
-      STDERR.puts 'Event message message content: ' + event.message.message.content
+      STDERR.puts 'Event content: ' + event.content.to_s
+      STDERR.puts 'Event message: ' + event.message.to_s
+      STDERR.puts 'Event message content: ' + event.message.content.to_s
+      STDERR.puts 'Event message channel name: ' + event.message.channel.name.to_s
+      STDERR.puts 'Event message message content: ' + event.message.message.content.to_s
       STDERR.puts 'Raw: ' + raw
       discordmessage = event.message.content
       
