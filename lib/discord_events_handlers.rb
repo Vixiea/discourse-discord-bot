@@ -40,6 +40,7 @@ module ::DiscordBot::DiscordEventsHandlers
           end
         end
       end
+        STDERR.puts $DiscordPost
     end
   end
 end
