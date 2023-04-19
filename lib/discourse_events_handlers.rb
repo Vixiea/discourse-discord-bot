@@ -5,7 +5,8 @@ module ::DiscordBot::DiscourseEventsHandlers
       if Chat::Channel.find_by(id: message.chat_channel_id).chatable_type != 'DirectMessage' && !::DiscordBot::Bot.discord_bot.nil? then
           chat_listening_categories = SiteSetting.discord_bot_chat_listening_categories.split('|')
           matching_channel = Chat::Channel.find_by(id: message.chat_channel_id)
-          if SiteSetting.discord_bot_auto_channel_sync- && $DiscordPost = 0 then
+          STDERR.puts matching_channel
+          if SiteSetting.discord_bot_auto_channel_sync && $DiscordPost = 0 then
             channel_id = matching_channel.description.to_s
             #channel_id = matching_channel.slug
             text = User.find_by(id: message.user_id).name + ": " + message.message.to_s
