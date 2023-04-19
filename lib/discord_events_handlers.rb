@@ -9,7 +9,7 @@ module ::DiscordBot::DiscordEventsHandlers
       return if event.message.from_bot?
 
       system_user = User.find_by(id: -1)
-
+      raw = ""
       associated_user = UserCustomField.find_by(value: event.message.author.username + "#" + event.message.author.discriminator)
 
       unless associated_user.nil?
