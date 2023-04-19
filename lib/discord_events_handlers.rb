@@ -14,13 +14,13 @@ module ::DiscordBot::DiscordEventsHandlers
 
       unless associated_user.nil?
         message_user = User.find_by(id: associated_user.user_id)
+        raw = event.message.to_s
       else
         message_user = system_user
-        raw = event.message.username.to_s + ": "
+        raw = event.message.username.to_s + ": " + event.message.to_s
       end
 
       discordmessage = event.message.to_s
-      raw = raw + discordmessage
       if !discordmessage.blank?
         if SiteSetting.discord_bot_auto_channel_sync
           matching_channel = Chat::Channel.find_by(name: event.message.channel.name)
