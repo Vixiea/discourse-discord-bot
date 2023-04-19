@@ -20,7 +20,7 @@ module ::DiscordBot::DiscordEventsHandlers
       end
 
       discordmessage = event.message.to_s
-      raw += discordmessage
+      raw = raw + discordmessage
       if !discordmessage.blank?
         if SiteSetting.discord_bot_auto_channel_sync
           matching_channel = Chat::Channel.find_by(name: event.message.channel.name)
