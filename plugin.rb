@@ -17,10 +17,11 @@ gem 'http-cookie', '1.0.3'
 gem 'http-accept', '1.7.0', { require: false }
 gem 'rest-client', '2.1.0.rc1'
 
-gem 'discordrb-webhooks', '3.3.0', { require: false }
+gem 'discordrb-webhooks', '3.4.2'
 gem 'discordrb', '3.4.0'
 
 require 'discordrb'
+require 'discordrb/webhooks'
 
 enabled_site_setting :discord_bot_enabled
 
