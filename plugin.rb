@@ -18,6 +18,8 @@ gem 'http-accept', '1.7.0', { require: false }
 gem 'rest-client', '2.1.0.rc1'
 
 gem 'discordrb', github: 'shardlab/discordrb', branch: 'main'
+bundle update
+bundle exec ...
 
 require 'discordrb'
 require 'discordrb/webhooks'
