@@ -16,8 +16,6 @@ gem 'domain_name', '0.5.20180417'
 gem 'http-cookie', '1.0.3'
 gem 'http-accept', '1.7.0', { require: false }
 gem 'rest-client', '2.1.0.rc1'
-gem 'discordrb', github: 'shardlab/discordrb', branch: 'main'
-
 
 require 'discordrb'
 require 'discordrb/webhooks'
