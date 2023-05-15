@@ -16,6 +16,13 @@ gem 'domain_name', '0.5.20180417'
 gem 'http-cookie', '1.0.3'
 gem 'http-accept', '1.7.0', { require: false }
 gem 'rest-client', '2.1.0.rc1'
+git 'https://github.com/shardlab/discordrb.git' do
+  gem 'discordrb'
+  gem 'discordrb-webhooks'
+end
+
+require 'discordrb'
+require 'discordrb/webhooks'
 
 enabled_site_setting :discord_bot_enabled
 
