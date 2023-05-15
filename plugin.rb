@@ -17,9 +17,6 @@ gem 'http-cookie', '1.0.3'
 gem 'http-accept', '1.7.0', { require: false }
 gem 'rest-client', '2.1.0.rc1'
 
-require 'discordrb'
-require 'discordrb/webhooks'
-
 enabled_site_setting :discord_bot_enabled
 
 after_initialize do
